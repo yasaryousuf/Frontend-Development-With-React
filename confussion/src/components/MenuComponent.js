@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay, Breadcrumb, BreadcrumbItem, CardText, CardBody, CardTitle } from 'reactstrap';
+import {Link} from 'react-router-dom';
 
 
 class Menu extends Component {
@@ -13,15 +14,17 @@ class Menu extends Component {
         if (dish != null) {
             return (
                 <Card>
-                    <CardImg width='100%' object src={dish.image} alt={dish.name} /> 
-                    <CardBody>
-                        <CardTitle>
-                            {dish.name}
-                        </CardTitle> 
+                    <Link to={`/menu/${dish.id}`}>
+                        <CardImg width='100%' object src={dish.image} alt={dish.name} /> 
                         <CardBody>
-                            {dish.description}
-                        </CardBody>                       
-                    </CardBody>
+                            <CardTitle>
+                                {dish.name}
+                            </CardTitle> 
+                            <CardBody>
+                                {dish.description}
+                            </CardBody>                       
+                        </CardBody>
+                    </Link>
                 </Card>
             )
         } else {
@@ -36,7 +39,7 @@ class Menu extends Component {
         const menu = this.props.dishes.map((dish) => {
             return (
                 <div key={dish.id} className="col-12 col-md-5 m-1">
-                    <Card onClick={()=>this.props.onClick(dish.id)}>
+                    <Card>
                             <CardImg width='100%' object src={dish.image} alt={dish.name}/>
                             <CardImgOverlay>
                                 <CardTitle heading>
@@ -49,7 +52,21 @@ class Menu extends Component {
         });
         return (
             <div className='container'>
-                 <div className='row'>
+                <div className='row'>
+                    <Breadcrumb>
+                        <BreadcrumbItem>
+                            <Link to='/home'>Home</Link>
+                        </BreadcrumbItem>
+                            <BreadcrumbItem>
+                            <Link active>Menu</Link>
+                        </BreadcrumbItem>
+                    </Breadcrumb>
+                    <div className="col-12">
+                        <h3>Menu</h3>
+                        <hr/>
+                    </div> 
+                </div>
+                <div className='row'>
                         {menu}
                 </div>
                 <div className='row'>
